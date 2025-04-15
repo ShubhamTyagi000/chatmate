@@ -8,6 +8,7 @@ export const getUsers = async (req, res) => {
     const filteredUsers = await User.find({ _id: { $ne: loggedUser } }).select(
       "-password"
     );
+    
     if (!filteredUsers)
       return res
         .status(404)

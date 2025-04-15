@@ -4,21 +4,22 @@ import { Camera, User, Mail } from "lucide-react";
 
 export default function ProfilePage() {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
-  const [selectedImage, setSelectedImage] = useState(null);
+  // const [selectedImage, setSelectedImage] = useState(null);
   const handleImageUpload = async (e) => {
-    console.log('entered');
-    
     e.preventDefault();
-    console.log('e', e)
-    const file = e.target.files[0];
+    const file = e.target.files['0'];
+    console.log('files', file)
     if (!file) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setSelectedImage(base64Image);
-      await updateProfile({ profilePic: base64Image });
-    }
+    var data = new FormData();
+    data.append('profileImage', file);
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = async () => {
+    //   const base64Image = reader.result;
+    //   setSelectedImage(base64Image);
+    //   await updateProfile({ profilePic: base64Image });
+    // };
+    await updateProfile(data);
   };
 
   return (
@@ -32,7 +33,7 @@ export default function ProfilePage() {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImage || authUser.data.profilePic || "/avatar.png"}
+                src={authUser.data.profilePic || "/avatar.png"}
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4 "
               />
@@ -88,21 +89,18 @@ export default function ProfilePage() {
           </div>
 
           <div className="mt-6 bg-base-300 rouded-xl p-6">
-            <h2 className="text-lg font-medium mb-4">
-                Account Information
-            </h2>
+            <h2 className="text-lg font-medium mb-4">Account Information</h2>
             <div className="space-y-3 text-sm">
               <div className="flex items-ceter justify-between py-2 border-b border-zinc-700">
                 <span>Member Since</span>
-                <span>{ authUser?.data.createdAt?.split('T')[0]}</span>
+                <span>{authUser?.data.createdAt?.split("T")[0]}</span>
               </div>
               <div className="flex items-center justify-between py-2">
                 <span>Account Status</span>
                 <span className="text-green-500">Active</span>
               </div>
-                </div>
-                </div>
-
+            </div>
+          </div>
         </div>
       </div>
     </div>

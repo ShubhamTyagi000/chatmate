@@ -16,7 +16,7 @@ export default function LoginPage() {
     if (!formData.email.trim()) return toast.error('Email is required');
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error('Invalid email');
     if (!formData.password) return toast.error('Password is required');
-    if (formData.password.length < 6) return toast.error('Password must be atleast 6 characters');
+    // if (formData.password.length < 6) return toast.error('Password must be atleast 6 characters');
     return true
   };
   const handleSubmit = async (e) => {

@@ -18,7 +18,7 @@ app.use(cors({
     credentials: true
 }))
 app.use('/api/auth', authRoutes);
-app.use('/api/message', messageRoutes);
+app.use('/api/messages', messageRoutes);
 app.listen(PORT || 3000, () => {
     console.log(`app started at port ${PORT}`);
     connectDB()

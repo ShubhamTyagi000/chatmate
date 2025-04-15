@@ -96,8 +96,11 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { profiePic } = req.body;
-    if (!profiePic)
+    console.log('api hit')
+    console.log(Array.isArray(req.files),'req', req.files);
+    const profilePic = req.files[0];
+    // console.log('profilepic', profilePic)
+    if (!profilePic)
       return res
         .status(400)
         .send({
@@ -107,7 +110,7 @@ export const updateProfile = async (req, res) => {
         });
 
     const userId = req.user._id;
-    const uploadResponse = await cloudinary.uploader.upload(profiePic);
+    const uploadResponse = await cloudinary.uploader.upload(profilePic.path);
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { profilePic: uploadResponse.secure_url },
@@ -119,6 +122,7 @@ export const updateProfile = async (req, res) => {
       data: { userId: updatedUser._id, name: updatedUser.fullName },
     });
   } catch (error) {
+    console.log('error', error)
     res
       .status(500)
       .send({ success: false, message: "Something went wrong", data: null });
