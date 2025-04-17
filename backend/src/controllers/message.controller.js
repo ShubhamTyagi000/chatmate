@@ -58,7 +58,7 @@ export const sendMessage = async (req, res) => {
             image: imageUrl ? imageUrl : ''
         });
         await newMessage.save();
-        return res.status(200).send({ success: true, message: 'message sent', data: newMessage._id });
+        return res.status(200).send({ success: true, message: 'message sent', data: newMessage });
     } catch (error) {
         return res.status(500).send({
             success: false, message: 'something went wrong', data: null
